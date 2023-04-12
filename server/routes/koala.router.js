@@ -37,11 +37,10 @@ koalaRouter.post( '/', (req, res) => {
 
 // PUT
 koalaRouter.put('/:id', (req, res) => {
-    console.log( `In PUT request /koalas` );
     let koalaId = req.params.id;
-    let koalaToEdit = req.body;
-    let queryText = 'UPDATE "koalas" SET "name" = $1, "age" = $2, "gender" = $3, "readyForTransfer" = $4, "notes" = $5 WHERE "id" = $6';
-    pool.query(queryText, [koalaToEdit.name, koalaToEdit.age, koalaToEdit.gender, koalaToEdit.readyForTransfer, koalaToEdit.notes, koalaId]).then((result) => {
+    console.log( `PUT request made for ${koalaId}` );
+    let queryText = `UPDATE "koalas" SET "readyForTransfer" = $1 WHERE "id" = $2`;
+    pool.query(queryText, [true, koalaId]).then((result) => {
         res.sendStatus(200);
     }).catch((error) => {
         console.log( `Error in PUT ${error}` );
